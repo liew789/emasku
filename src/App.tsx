@@ -68,7 +68,7 @@ export default function App() {
         setAllChartPoints(chartResult.value)
       } else {
         console.log('cwlog: chart load failed', chartResult.reason)
-        setChartError('chart')
+        setChartError('chart' + chartResult.reason)
       }
 
       if (kijangResult.status === 'fulfilled') {
