@@ -72,17 +72,30 @@ function normalizeRows(data: BnmKijangResponse['data']): BnmKijangRow[] {
   return Array.isArray(data) ? data : [data]
 }
 
+async function fetchBnmJson(path: string): Promise<BnmKijangResponse> {
+  const response = await fetch(`/api/bnm${path}`)
+  const contentType = response.headers.get('content-type') || ''
+
+  if (!response.ok) {
+    throw new Error(`BNM ${path} failed (${response.status})`)
+  }
+
+  // Cloudflare without the Pages Function often returns index.html for unknown routes.
+  if (!contentType.includes('application/json')) {
+    throw new Error(
+      `BNM ${path} returned non-JSON. Deploy the Cloudflare Pages Function at functions/api/bnm.`,
+    )
+  }
+
+  return (await response.json()) as BnmKijangResponse
+}
+
 async function fetchLatestBnmRow(): Promise<BnmKijangRow> {
   if (latestCache && Date.now() - latestCache.at < LATEST_CACHE_MS) {
     return latestCache.row
   }
 
-  const response = await fetch('/api/bnm/kijang-emas')
-  if (!response.ok) {
-    throw new Error(`BNM kijang-emas failed (${response.status})`)
-  }
-
-  const json = (await response.json()) as BnmKijangResponse
+  const json = await fetchBnmJson('/kijang-emas')
   const row = normalizeRows(json.data)[0]
   if (!row?.one_oz || !row.effective_date) {
     throw new Error('BNM kijang-emas response was empty')
@@ -97,12 +110,7 @@ async function fetchBnmMonth(year: number, month: number): Promise<BnmKijangRow[
   const cached = monthCache.get(key)
   if (cached) return cached
 
-  const response = await fetch(`/api/bnm/kijang-emas/year/${year}/month/${month}`)
-  if (!response.ok) {
-    throw new Error(`BNM chart month failed (${response.status})`)
-  }
-
-  const json = (await response.json()) as BnmKijangResponse
+  const json = await fetchBnmJson(`/kijang-emas/year/${year}/month/${month}`)
   const rows = normalizeRows(json.data)
   monthCache.set(key, rows)
   return rows
