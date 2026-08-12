@@ -1,0 +1,10 @@
+name = "emasku"
+main = "worker.js"
+compatibility_date = "2026-08-12"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+# Ensure /api/bnm hits the Worker instead of SPA index.html
+run_worker_first = ["/api/*"]
