@@ -60,7 +60,7 @@ export default function App() {
       if (liveResult.status === 'fulfilled') {
         setLive(liveResult.value)
       } else {
-        console.log('cwlog: live price load failed', liveResult.reason)
+        console.log('cwlog: live price loads failed', liveResult.reason)
         setLiveError('live')
       }
 
