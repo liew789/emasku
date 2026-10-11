@@ -68,6 +68,7 @@ type Dict = {
   remove: string
   removeAria: string
   footer: string
+  versionLabel: string
   langAria: string
 }
 
@@ -130,6 +131,7 @@ export const translations: Record<Locale, Dict> = {
     removeAria: 'Remove holding of {grams} grams',
     footer:
       'Prices from Bank Negara Malaysia Kijang Emas (official). MyEmas stores your purchases only on this device.',
+    versionLabel: 'Version {version}',
     langAria: 'Choose language',
   },
   ms: {
@@ -190,6 +192,7 @@ export const translations: Record<Locale, Dict> = {
     removeAria: 'Buang pegangan {grams} gram',
     footer:
       'Harga daripada Bank Negara Malaysia Kijang Emas (rasmi). MyEmas simpan pembelian anda hanya pada peranti ini.',
+    versionLabel: 'Versi {version}',
     langAria: 'Pilih bahasa',
   },
   zh: {
@@ -249,6 +252,7 @@ export const translations: Record<Locale, Dict> = {
     removeAria: '删除 {grams} 克持仓',
     footer:
       '价格来自马来西亚国家银行 Kijang Emas（官方）。寻金记仅将购买记录保存在本设备。',
+    versionLabel: '版本 {version}',
     langAria: '选择语言',
   },
 }

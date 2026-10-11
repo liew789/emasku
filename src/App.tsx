@@ -21,6 +21,7 @@ import {
 } from './lib/storage'
 import type { ChartPoint, ChartRange, Holding, KijangEmas, LiveGoldPrice } from './types'
 import { DEFAULT_CHART_RANGE } from './types'
+import { APP_VERSION } from './version'
 
 export default function App() {
   const { tr } = useLocale()
@@ -163,6 +164,7 @@ export default function App() {
 
         <footer className="footer">
           <p>{tr('footer')}</p>
+          <p className="footer__version">{tr('versionLabel', { version: APP_VERSION })}</p>
         </footer>
       </main>
     </div>
